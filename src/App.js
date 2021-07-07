@@ -65,7 +65,7 @@ componentDidMount(){
     console.log(response);
   this.setState({restarray:response.data.data});
     console.log(this.state.restarray);
-  });
+  });git
 }
 
 carsselectedfunction(){
