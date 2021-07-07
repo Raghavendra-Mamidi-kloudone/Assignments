@@ -4,6 +4,7 @@ import './App.css';
 
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
+import axios from 'axios';
 
 //internal CSS implementation in React
 //const styles={
@@ -46,10 +47,7 @@ class App extends Component{
   super(props);
 this.state={
 
-cars:[
-
-  
-]
+restarray:[],
 
 //cars: [
  //'Volvo','Kia','Audi','Bironao','Toyoto','Jeep','Bironao19','i10','SwiftDzire','Indica','Scorpio'
@@ -59,21 +57,35 @@ selectedcars:[],  //selected cars array(empty to store the values of user once s
 this.carsselectedfunction = this.carsselectedfunction.bind(this);
 this.closetodropdown = this.closetodropdown.bind(this);//should bind with this to use set state[carsselectedfunction]
 }
+//api call response
+componentDidMount(){
+  axios.get('https://api.instantwebtools.net/v1/passenger?page=0&size=10')
+  .then(response=>{
+    debugger;
+    console.log(response);
+  this.setState({restarray:response.data.data});
+    console.log(this.state.restarray);
+  });
+}
 
 carsselectedfunction(){
-  debugger;
 var y =document.getElementById("selectedId").value;
 if(y!="Select"){
+  debugger;
   this.state.selectedcars.push(y);
   this.setState({
     selectedcars: this.state.selectedcars
   })
   
-  var temporaryarray = this.state.cars; // make a separate copy of the array, to delete value from cars
-    var index = temporaryarray.indexOf(y)
+  var temporaryarray = this.state.restarray;
+  // make a separate copy of the array, to delete value from cars, dropdownelemtn removed....
+  //var index = temporaryarray.indexOf(y)
+  //find index functiom used to find the index value of an object in an array.
+  var index=this.state.restarray.findIndex(x =>x.name===y);
     if (index !== -1) {
+
       temporaryarray.splice(index, 1);
-      this.setState({cars: temporaryarray});
+      this.setState({restarray: temporaryarray});
     }
   console.log(this.state.selectedcars);
 }
@@ -83,11 +95,12 @@ document.getElementById("selectedId").value= "Select";
 }
 //adding to dropdown(when presses 'x')
 closetodropdown(e){
+  debugger;
 console.log(e.target.id);
 var y=e.target.id;
-this.state.cars.push(y);
+this.state.restarray.push({name:y});
 this.setState({
-  cars: this.state.cars
+  restarray: this.state.restarray
 })
 
 var temporaryarray = this.state.selectedcars; 
@@ -110,8 +123,8 @@ return(
 <div className="sbar">
 <select size="1" className="selectcss" name="selectcss" placeholder="selct..." id="selectedId" onClick={this.carsselectedfunction}>
 <option value="Select" disabled selected hidden>Choose...</option>
- {this.state.cars.map((per)=>{
- return <option className="listspace"value={per}>{per}</option>
+ {this.state.restarray.map((singlearray)=>{
+ return <option className="listspace"value={singlearray.name}>{singlearray.name}</option>
  })}
 </select>
 </div>
