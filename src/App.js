@@ -45,10 +45,13 @@ class App extends Component{
  constructor(props){
   super(props);
 this.state={
-cars: [
- 'Volvo','Kia','Audi','Bironao','Toyoto','Jeep','Bironao19','i10','SwiftDzire','Indica','Scorpio'
-],
-selectedcars:[],  //selectedcars array(empty to store the values of user once selected from our options)
+
+
+
+//cars: [
+ //'Volvo','Kia','Audi','Bironao','Toyoto','Jeep','Bironao19','i10','SwiftDzire','Indica','Scorpio'
+//],
+selectedcars:[],  //selected cars array(empty to store the values of user once selected from our options)
 };
 this.carsselectedfunction = this.carsselectedfunction.bind(this);
 this.closetodropdown = this.closetodropdown.bind(this);//should bind with this to use set state[carsselectedfunction]
@@ -110,7 +113,7 @@ return(
 </select>
 </div>
 </div>
-
+//commented for git
 );
 
 
